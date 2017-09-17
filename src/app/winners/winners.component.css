@@ -1,0 +1,11 @@
+form, table{
+	margin-top: 30px;
+}
+form .help-block{
+	color: red;
+	margin-top: 0;
+}
+.winners-container{	
+	outline:none;
+	cursor: pointer;
+}

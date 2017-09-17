@@ -1,0 +1,72 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-6">
+		<form (ngSubmit)="onSubmit(formData)" #formData="ngForm">
+			<fieldset>
+			    <legend>Randomize Winners</legend>					   
+			 </fieldset>
+			<div class="form-group">
+				<label class="form-control-label" for="number">Number of Winners</label>
+				<input
+				 type="text"
+				 name="number" 
+				 id="number" 
+				 class="form-control" 
+				 [ngClass]="(number.invalid && number.touched) ? 'is-invalid':''"
+				 ngModel 
+				 required
+				 #number="ngModel">			
+			<span *ngIf="!number.valid && number.touched" class="form-text invalid-feedback">Set number of winners!</span>
+			</div>
+			<div class="form-group">
+				<label for="country">Select Region</label>
+				<select 
+					name="country" 
+					id="country"
+					class="form-control"
+					[ngModel]='defaultChoice'>
+					<option *ngFor="let country of countrySelectOptions"					
+						[selected]="defaultChoice === country "
+						[value]="country">					
+						{{ country }}
+					</option>				
+				</select>
+			</div>		
+			<div class="form-group">
+				<label class="form-control-label" for="period">Time period</label>
+	          	<input 
+	          	type="text"
+	          	name="period" 
+	          	id="period" 
+	          	class="form-control "
+	          	[ngClass]="(period.invalid && period.touched) ? 'is-invalid':''"
+	          	ngModel
+	          	required
+	          	#period="ngModel"
+	          	>	
+			<span *ngIf="!period.valid && period.touched" class="form-text invalid-feedback">Set period of time in minutes!</span>
+			</div>
+			<button type="submit" class="btn btn-primary" [disabled]="formData.invalid" >Draw Winners</button>
+		</form>
+		<span *ngIf="winnerOfCountryMessage !== '' " class="help-block">{{winnerOfCountryMessage}}</span>
+		
+		<table class="table table-hover" *ngIf="winners.length > 0">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Country</th>
+				</tr>		
+			</thead>
+			<tbody>
+		  		<tr *ngFor="let winner of winners" class="winners-container" [routerLink]='[ winner.id ]'>
+		  			<td>{{ winner.first_name }}</td>
+		  			<td>{{ winner.last_name }}	</td>
+		  			<td>{{ winner.country }}</td>
+		  		</tr>			
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-12 col-sm-6">
+		<router-outlet></router-outlet>		
+	</div>	
+</div>
